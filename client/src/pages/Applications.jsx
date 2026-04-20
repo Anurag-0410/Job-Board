@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useUser } from '../context/UserContext'
-import ApplicationCard from '../components/application/ApplicationCard'
+import { ApplicationCard } from '../components/application/ApplicationCard'
 import { fetchMyApplications as fetchApplications } from '../services/api'
 
 const Applications = () => {
