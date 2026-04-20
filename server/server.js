@@ -1,5 +1,4 @@
-import express from 'express'
-import mongoose from 'mongoose'
+
 import authRoutes from './routes/authRoutes.js'
 import jobRoutes from './routes/jobRoutes.js'
 import applicationRoutes from './routes/applicationRoutes.js'
@@ -7,6 +6,8 @@ import { config } from 'dotenv'
 
 config()
 
+import express from 'express'
+import mongoose from 'mongoose'
 const app = express()
 const PORT = process.env.PORT || 5000
 

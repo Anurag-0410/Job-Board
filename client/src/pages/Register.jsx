@@ -107,7 +107,7 @@ const Register = () => {
             name="name"
             placeholder="Full Name"
             value={formData.name}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
           <Input
@@ -115,7 +115,7 @@ const Register = () => {
             name="email"
             placeholder="Email Address"
             value={formData.email}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
           />
           <Input
@@ -123,7 +123,7 @@ const Register = () => {
             name="password"
             placeholder="Password (min 6 characters)"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
           />
           <Input
@@ -131,7 +131,7 @@ const Register = () => {
             name="confirmPassword"
             placeholder="Confirm Password"
             value={formData.confirmPassword}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
             required
           />
 
@@ -143,14 +143,14 @@ const Register = () => {
                 name="phone"
                 placeholder="Phone Number"
                 value={formData.phone}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               />
               <Input
                 type="text"
                 name="skills"
                 placeholder="Skills (comma separated, e.g., React, Node.js, Python)"
                 value={formData.skills}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
               />
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Experience</label>
@@ -178,7 +178,7 @@ const Register = () => {
                 name="companyName"
                 placeholder="Company Name"
                 value={formData.companyName}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                 required={formData.role === 'company'}
               />
               <div>
@@ -186,7 +186,7 @@ const Register = () => {
                   name="companyDescription"
                   placeholder="Company Description"
                   value={formData.companyDescription}
-                  onChange={handleChange}
+                  onChange={(e) => setFormData({ ...formData, companyDescription: e.target.value })}
                   className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
                   rows="3"
                 />
@@ -196,7 +196,7 @@ const Register = () => {
                 name="companyWebsite"
                 placeholder="Company Website (optional)"
                 value={formData.companyWebsite}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
               />
             </>
           )}
