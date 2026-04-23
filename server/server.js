@@ -3,16 +3,26 @@ import authRoutes from './routes/authRoutes.js'
 import jobRoutes from './routes/jobRoutes.js'
 import applicationRoutes from './routes/applicationRoutes.js'
 import { config } from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-config()
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+config({ path: path.resolve(__dirname, '.env') })
 
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 const app = express()
 const PORT = process.env.PORT || 5000
 
 // Middleware
 app.use(express.json())
+app.use(cors({
+  origin: 'http://localhost:3000', // Adjust this to your frontend URL
+  credentials: true,
+}))
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI, {
