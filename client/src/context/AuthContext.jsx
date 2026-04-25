@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { loginUser, logoutUser, getCurrentUser, getAuthToken } from '../services/authService';
+import { loginUser, registerUser, logoutUser, getCurrentUser, getAuthToken } from '../services/authService';
 
 const AuthContext = createContext();
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setLoading(true);
     try {
-      const newUser = await loginUser(userData.email, userData.password);
+      const newUser = await registerUser(userData);
       setUser(newUser.user);
       setIsAuthenticated(true);
       return newUser;
