@@ -10,7 +10,9 @@ The Job Portal is a web application designed to connect job seekers with employe
 - **Job Listings**: Users can view available job postings and filter them based on various criteria.
 - **Application Management**: Job seekers can apply for jobs and track their application status.
 - **Responsive Design**: The application is designed to be mobile-friendly and accessible on various devices.
+- **Dashboard**: Job Seeker dashboard: List of applied jobs + status; HR dashboard: List of all jobs ,list of applicants
 
+“Recommended jobs”
 ## Technologies Used
 - **Frontend**: React, Vite, Tailwind CSS
 - **Backend**: Node.js, Express
