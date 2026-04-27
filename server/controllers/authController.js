@@ -11,20 +11,19 @@ export const register = async (req, res) => {
   const { name, email, password, role, phone, skills, experience, companyName, companyDescription, companyWebsite } = req.body;
 
   try {
+    console.log('Registration attempt for email:', email);
+    
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create user object based on role
+    // Create user object based on role - DO NOT hash password here, let the pre-save hook do it
     const userData = {
       name,
       email,
-      password: hashedPassword,
+      password, // Pass raw password, let pre-save hook hash it
       role: role || 'jobseeker',
     };
 
@@ -40,6 +39,7 @@ export const register = async (req, res) => {
     }
 
     const newUser = await User.create(userData);
+    console.log('User created:', newUser.email);
 
     // Generate token
     const token = generateToken(newUser._id, newUser.role);
@@ -57,6 +57,7 @@ export const register = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log('Registration error:', error);
     res.status(500).json({ message: 'Error registering user', error: error.message });
   }
 };
@@ -66,13 +67,22 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log('Login attempt for email:', email);
+    
     const user = await User.findOne({ email });
     if (!user) {
+      console.log('User not found for email:', email);
       return res.status(404).json({ message: 'Invalid email or password' });
     }
 
+    console.log('User found:', user.email);
+    console.log('Comparing passwords...');
+    
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Password match result:', isMatch);
+    
     if (!isMatch) {
+      console.log('Password mismatch for user:', email);
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
@@ -92,6 +102,7 @@ export const login = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log('Login error:', error);
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
 };

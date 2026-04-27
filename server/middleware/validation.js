@@ -139,9 +139,13 @@ export const validateApplication = [
     .normalizeEmail(),
   
   body('resume')
-    .trim()
     .notEmpty()
-    .withMessage('Resume is required'),
+    .withMessage('Resume is required')
+    .trim(),
+  
+  body('coverLetter')
+    .optional()
+    .trim(),
   
   body('phone')
     .optional()

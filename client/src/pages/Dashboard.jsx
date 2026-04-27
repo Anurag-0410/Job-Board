@@ -65,6 +65,10 @@ const Dashboard = () => {
     }
   };
 
+  const handleApply = (jobId) => {
+    navigate(`/jobs/${jobId}`);
+  };
+
   const getStatusColor = (status) => {
     const colors = {
       'Applied': 'bg-blue-100 text-blue-800',
@@ -144,7 +148,7 @@ const Dashboard = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {recommendedJobs.slice(0, 6).map((job) => (
-                    <JobCard key={job._id} job={job} />
+                    <JobCard key={job._id} job={job} onApply={handleApply} />
                   ))}
                 </div>
               )}

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { loginUser, registerUser, logoutUser, getCurrentUser, getAuthToken } from '../services/authService';
+import { applyForJob as apiApplyForJob } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -62,6 +63,24 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 
+  const applyForJob = async (jobId, applicationData) => {
+    try {
+      const payload = {
+        jobId,
+        applicantName: applicationData.name,
+        applicantEmail: applicationData.email,
+        resume: applicationData.resume,
+        coverLetter: applicationData.coverLetter,
+        phone: applicationData.phone || '',
+      };
+      
+      const response = await apiApplyForJob(payload);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ 
       user, 
@@ -71,6 +90,7 @@ export const AuthProvider = ({ children }) => {
       register, 
       logout,
       updateUser,
+      applyForJob,
     }}>
       {children}
     </AuthContext.Provider>

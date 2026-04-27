@@ -23,6 +23,14 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/jobs" element={<Jobs />} />
+            <Route 
+              path="/jobs/create" 
+              element={
+                <ProtectedRoute allowedRoles={['company', 'admin']}>
+                  <CreateJob />
+                </ProtectedRoute>
+              } 
+            />
             <Route path="/jobs/:id" element={<JobDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -31,14 +39,6 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Dashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/jobs/create" 
-              element={
-                <ProtectedRoute allowedRoles={['company', 'admin']}>
-                  <CreateJob />
                 </ProtectedRoute>
               } 
             />

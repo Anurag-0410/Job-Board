@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { fetchJobs } from '../services/api'
 import JobList from '../components/job/JobList'
 import JobFilters from '../components/job/JobFilters'
 import Input from '../components/common/Input'
 
 const Jobs = () => {
+  const navigate = useNavigate()
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -65,6 +67,10 @@ const Jobs = () => {
     loadJobs(newPage)
   }
 
+  const handleApply = (jobId) => {
+    navigate(`/jobs/${jobId}`)
+  }
+
   return (
     <main className="px-4 py-8 min-h-screen bg-gray-50">
       <section className="mx-auto max-w-7xl">
@@ -105,7 +111,7 @@ const Jobs = () => {
             <div className="mb-4 text-gray-600">
               Showing {jobs.length} of {pagination.total} jobs
             </div>
-            <JobList jobs={jobs} />
+            <JobList jobs={jobs} onApply={handleApply} />
             
             {/* Pagination */}
             {pagination.totalPages > 1 && (

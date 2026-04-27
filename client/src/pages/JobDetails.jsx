@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchJobById, applyForJob } from '../services/api';
+import { fetchJobById } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import ApplicationForm from '../components/application/ApplicationForm';
+import Modal from '../components/common/Modal';
 import Button from '../components/common/Button';
 
 const JobDetails = () => {
@@ -11,7 +13,7 @@ const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [applying, setApplying] = useState(false);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState('');
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const JobDetails = () => {
     loadJob();
   }, [id]);
 
-  const handleApply = async () => {
+  const handleApplyClick = () => {
     if (!isAuthenticated) {
       navigate('/login', { state: { from: `/jobs/${id}` } });
       return;
@@ -38,20 +40,16 @@ const JobDetails = () => {
       return;
     }
 
-    setApplying(true);
-    try {
-      await applyForJob({
-        jobId: id,
-        applicantName: user.name,
-        applicantEmail: user.email,
-        resume: user.resume || '',
-        phone: user.phone || '',
-      });
-      setApplicationStatus('Applied successfully!');
-    } catch (err) {
-      setApplicationStatus(err.response?.data?.message || 'Failed to apply');
-    }
-    setApplying(false);
+    setShowApplicationForm(true);
+  };
+
+  const handleApplicationSuccess = () => {
+    setApplicationStatus('Applied successfully!');
+    setShowApplicationForm(false);
+  };
+
+  const handleApplicationError = (errorMsg) => {
+    setApplicationStatus(errorMsg || 'Failed to apply');
   };
 
   if (loading) {
@@ -147,11 +145,10 @@ const JobDetails = () => {
           
           {isAuthenticated && user?.role === 'jobseeker' ? (
             <Button 
-              onClick={handleApply} 
-              disabled={applying}
+              onClick={handleApplyClick}
               className="w-full"
             >
-              {applying ? 'Applying...' : 'Apply Now'}
+              Apply Now
             </Button>
           ) : !isAuthenticated ? (
             <Button 
@@ -166,6 +163,20 @@ const JobDetails = () => {
             </div>
           )}
         </div>
+
+        {/* Application Form Modal */}
+        {showApplicationForm && (
+          <Modal isOpen={showApplicationForm} onClose={() => setShowApplicationForm(false)}>
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-4">Apply for {job.title}</h2>
+              <ApplicationForm 
+                jobId={id} 
+                onSuccess={handleApplicationSuccess}
+                onError={handleApplicationError}
+              />
+            </div>
+          </Modal>
+        )}
       </div>
     </div>
   );

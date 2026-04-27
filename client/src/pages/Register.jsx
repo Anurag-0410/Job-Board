@@ -6,7 +6,7 @@ import Button from '../components/common/Button'
 import Input from '../components/common/Input'
 
 const Register = () => {
-  const { login } = useAuth()
+  const { register } = useAuth()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
