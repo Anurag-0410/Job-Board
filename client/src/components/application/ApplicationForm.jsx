@@ -66,7 +66,7 @@ const ApplicationForm = ({ jobId, onSuccess, onError }) => {
         label="Name"
         name="name"
         value={applicationData.name}
-        onChange={handleChange}
+        onChange={(e) => setApplicationData({ ...applicationData, name: e.target.value })}
         required
       />
       <Input
@@ -74,14 +74,14 @@ const ApplicationForm = ({ jobId, onSuccess, onError }) => {
         name="email"
         type="email"
         value={applicationData.email}
-        onChange={handleChange}
+        onChange={(e) => setApplicationData({ ...applicationData, email: e.target.value })}
         required
       />
       <Input
         label="Phone"
         name="phone"
         value={applicationData.phone}
-        onChange={handleChange}
+        onChange={(e) => setApplicationData({ ...applicationData, phone: e.target.value })}
         required
       />
       <div>
@@ -103,7 +103,7 @@ const ApplicationForm = ({ jobId, onSuccess, onError }) => {
         label="Cover Letter"
         name="coverLetter"
         value={applicationData.coverLetter}
-        onChange={handleChange}
+        onChange={(e) => setApplicationData({ ...applicationData, coverLetter: e.target.value })}
         placeholder="Tell us why you're a great fit for this job..."
         required
       />
